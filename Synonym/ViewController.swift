@@ -12,8 +12,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     //MARK: - Outlets
     @IBOutlet weak var tabelView: UITableView!
+    @IBOutlet weak var searchText: UITextField!
     
-
+    //MARK: - Actions
+    @IBAction func searchSynonym(sender: AnyObject) {
+        if searchText.text != nil {
+            getSynonyms(searchText.text!)
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,6 +47,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         cell.textLabel?.text = "Zeile \(indexPath.row)"
         return cell
+    }
+    
+    //MARK: - Methoden
+    func getSynonyms(searchText:String){
+        
+        var foundedSynonyms = [String]()
+        let jsonDictionary = fetchSynonyms(searchText)
+        
+    }
+    
+    func fetchSynonyms(searchText:String) -> NSDictionary {
+        let apiUrl = NSURL(string: "https://www.openthesaurus.de/synonyme/search?q=\(searchText)&format=application/json")
+        
+        let jsonRespones = NSData(contentsOfURL: apiUrl!)
+        
+        var jsonDict: NSDictionary = [:]
+        do {
+            jsonDict = try NSJSONSerialization.JSONObjectWithData(jsonRespones!, options: []) as! NSDictionary
+        }catch {
+            print(error)
+        }
+        
+        return jsonDict
+        
     }
 
 
