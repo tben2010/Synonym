@@ -20,6 +20,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view, typically from a nib.
         tabelView.delegate = self
         tabelView.dataSource = self
+        
+        title = NSLocalizedString("synonymTile", comment: "Title in Search View Controller")
     }
 
     override func didReceiveMemoryWarning() {
